@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.UserMapper">
+	
+	<!-- 查找新闻列表 -->
+	<select id="findAll" resultType="News">
+		SELECT enId, title, content, createTime FROM easybuynews
+	</select>
+
+	<!-- 通过 id 查找指定新闻 -->
+	<select id="findByNid" parameterType="int" resultType="News">
+		SELECT enId, title, content, createTime FROM easybuynews WHERE enId=#{nid}
+	</select>
+	
+	<!-- 新闻分页列表 -->
+	<select id="findPage" resultType="News" >
+		SELECT enId, title, content, createTime FROM easybuynews LIMIT #{pageno} ,#{im}
+	</select>
+	
+	
+	
+	
+	
+	
+
+	<!-- // 查找新闻列表
+	public List<News> findAll();
+
+	// 通过 id 查找指定新闻
+	public News findByNid(int nid);
+
+	// 新闻分页列表
+	public List<News> findPage(int pageno, int i);
+		/*List<News> list = new ArrayList<News>();
+		String sql = "SELECT enId, title, content, createTime FROM easybuynews LIMIT ? ,? ";*/
+
+	// 修改指定新闻
+	public int changeNews(int nid, String title, String content);
+		/*String sql = "UPDATE easybuynews SET title = ? , content = ? WHERE enId = ?";
+		int temp = super.update(sql, title,content,nid);*/
+
+	// 新增新闻
+	public int addNews(String title, String content);
+		/*String sql = "INSERT INTO easybuynews (title,content,createTime)VALUES(?,?,?)";
+		Date date = new Date(System.currentTimeMillis());
+		java.sql.Date time = new java.sql.Date(date.getTime());
+		int temp = super.update(sql, title,content,time);*/
+
+	// 删除指定新闻
+	public int dele(int pid);
+		/*String sql = "DELETE FROM easybuynews WHERE enId = ?";
+		int temp = super.update(sql, pid);*/ -->
+
+</mapper>

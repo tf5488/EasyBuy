@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.OrderMapper">
+
+	<!-- 通过用户ID以及状态查找购物车 -->
+	<select id="findByUser" resultType="Order" parameterType="int">
+		SELECT
+		`eoId`, `userId`, `address`,`createTime`, `cost`,
+		`status`, `type` FROM `easybuyorder` WHERE `userId`=#{userId} AND STATUS = 0
+		ORDER BY `createTime` DESC
+	</select>
+
+	<!-- 为用户添加购物车 -->
+	<insert id="add" parameterType="Order">
+		INSERT INTO easybuyorder
+		(eoId,userId,`status`,`type`)VALUES(#{oid},#{userid},#{status},#{type})
+	</insert>
+
+	<!-- 为用户添加购物订单 -->
+	<insert id="add" parameterType="Order">
+		INSERT INTO easybuyorder
+		(eoId,userId,address,cost,`status`,`type`)VALUES(#{oid},#{userid},#{address},#{cost},1,1)
+	</insert>
+
+	<!-- 购物车 —————> 订单 -->
+	<update id="change">
+		UPDATE easybuyorder SET address = #{address} ,
+		`status` = 1 WHERE eoId = #{oid}
+	</update>
+
+	<!-- 用于修改订单状态 -->
+	<update id="change">
+		UPDATE easybuyorder SET `status` = #{tp} WHERE eoId =
+		#{oid}
+	</update>
+
+</mapper>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.UserMapper">
+
+	<!-- 查询所有 -->
+	<select id="findAll" resultType="Product">
+		SELECT epId,epName,description,price,stock,epcId,fileName FROM easybuyproduct
+	</select>
+
+	<!-- 通过 id 查找指定商品 -->
+	<select id="findById" resultType="Product" parameterType="int">
+		SELECT epName,description,price,stock,epcId,fileName 
+		FROM easybuyproduct WHERE epId = #{pid}
+	</select>
+	
+	<!-- 通过分类查找商品列表 -->   
+	<select id="findByPcid" resultType="Product" parameterType="int">
+		SELECT epId,epName,description,price,stock,epcId,fileName 
+		FROM easybuyproduct WHERE epcId = #{pcid} 
+	</select>
+	
+	<!-- 修改指定商品信息 -->
+	<update id="change" parameterType="Product">
+		UPDATE easybuyproduct SET epName = #{pname} ,description = #{description} ,price = #{price} ,
+		stock = #{stock} ,epcId = #{pcid} , fileName = #{filename} WHERE epId = #{pid}
+	</update>
+	
+	<!-- 修改商品库存 -->
+	<update id="changeStock" >
+		UPDATE easybuyproduct SET stock = #{num}  WHERE epId = #{pid}
+	</update>
+	
+	<!-- 新建商品信息 -->
+	<insert id="addProduct" parameterType="Product">
+		INSERT INTO easybuyuser (userName,nickName,userPwd,userSex,birthday,identityCode,email,mobile,address,`status`)
+		VALUES(#{username},#{nickname},#{userpwd},#{usersex},#{birthday},#{identityCode},#{email},#{mobile},#{address},#{status})
+	</insert>
+	
+	<!-- 删除指定商品 -->
+	<delete id="dele" parameterType="int">
+		DELETE FROM easybuyproduct WHERE epId = #{pid}
+	</delete>
+
+</mapper>

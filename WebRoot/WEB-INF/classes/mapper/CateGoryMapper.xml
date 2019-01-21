@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.CateGoryMapper">
+	
+	<!-- 查找父类列表 -->
+	<select id="findParent" resultType="CateGory">
+		SELECT epcId,epcName,parentId FROM easybuycategory
+		WHERE epcId = parentId OR parentId = 0
+	</select>
+	
+	<!-- 通过父类查找所属子类列表 -->
+	<select id="findChild" resultType="CateGory" parameterType="int">
+		SELECT epcId,epcName,parentId FROM easybuycategory WHERE parentId = #{cid}  AND epcId &lt; &gt; parentId
+	</select>
+	
+	<!-- 通过ID查找分类 -->
+	<select id="findById" parameterType="int" resultType="CateGory">
+		SELECT epcId,epcName,parentId FROM easybuycategory  WHERE epcId = #{cid}
+	</select>
+	
+	<!-- 修改指定分类的信息 -->
+	<update id="change">
+		UPDATE easybuycategory SET epcName = #{className} , parentId = #{parentId} WHERE epcId = #{cid}
+	</update>
+	
+	<!-- 新增一个分类 -->
+	<insert id="creat">
+		INSERT INTO easybuycategory (epcName,parentId)VALUES(#{className},#{pid})
+	</insert>
+	
+	<!-- 删除指定分类 -->
+	<delete id="dele" parameterType="int">
+		DELETE FROM easybuycategory WHERE epcId = #{pid}
+	</delete>
+</mapper>

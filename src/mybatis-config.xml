@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<!-- 通过这个配置文件完成mybatis与数据库的连接 -->
+<configuration>
+	<!-- 引入 database.properties 文件 -->
+	<properties resource="database.properties"/>
+	<!-- 配置mybatis的log实现为LOG4J -->
+	<settings>
+		<setting name="logImpl" value="LOG4J" />
+		
+		<!-- 设置resultMap自动映射级别 -->
+		<setting name="autoMappingBehavior" value="PARTIAL"/>
+		
+	</settings>
+	<!--用来设置别名的   设置之后mapper.xml中的输出类型不用添加包名  -->
+	<typeAliases>
+		<package name="entity"/>
+	</typeAliases>
+	
+	<environments default="development">  <!-- 指定一个默认environment的连接方式 -->
+		<environment id="development">
+			<!--配置事务管理，采用JDBC的事务管理 -->
+			<transactionManager type="JDBC"></transactionManager>
+			<!-- POOLED:mybatis自带的数据源，JNDI:基于tomcat的数据源 -->
+			<dataSource type="POOLED">  <!-- POOLED 连接池技术 -->
+				<property name="driver" value="com.mysql.jdbc.Driver" />
+				<property name="url" value="jdbc:mysql://localhost:3306/easybuy?useUnicode=true&amp;charaterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull"/>
+				<property name="username" value="root" />
+				<property name="password" value="root" />
+			</dataSource>
+		</environment>
+	</environments>
+
+	<!-- 将mapper文件加入到配置文件中 -->
+	<mappers>
+		<mapper resource="mapper/UserMapper.xml" />  <!-- 本地的内容连接用 resource -->
+		<mapper resource="mapper/ProductMapper.xml" />
+		<mapper resource="mapper/OrderMapper.xml" />
+		<mapper resource="mapper/OrderDetailMapper.xml" />
+		<mapper resource="mapper/OderMapper.xml" />
+		<mapper resource="mapper/NewsMapper.xml" />
+		<mapper resource="mapper/CommentMapper.xml" /> 
+		<mapper resource="mapper/CateGoryMapper.xml" /> 
+		
+		<!-- <mapper url="file://dao/UserMapper.xml"/>  --> <!-- 使用网络连接的时候,用URL ,连接到网络地址 -->
+	</mappers>
+
+
+
+</configuration>
